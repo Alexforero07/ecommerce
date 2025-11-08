@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
@@ -25,7 +27,19 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
+    <div className="flex h-screen items-center justify-center bg-gray-100 relative">
+      {/* Boton con imagen */}
+      <button
+        onClick={() => router.push("/")}
+        className="absolute top-4 left-4 bg-white/80 rounded-full p-2 shadow hover:bg-gray-200 transition"
+      >
+        <img
+          src="/imagenes/back.png" // ← Cambia esta ruta por tu icono (por ejemplo /imagenes/flecha.png)
+          alt="Volver al comercio"
+          className="w-5 h-5 sm:w-6 sm:h-6"
+        />
+      </button>
+
       {/* Contenedor del cuadro */}
       <div className="flex w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden">
         {/* Lado izquierdo - Imagen */}
@@ -54,7 +68,7 @@ export default function LoginPage() {
 
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"} // ← Funciona ahora
+                type={showPassword ? "text" : "password"}
                 placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -63,7 +77,7 @@ export default function LoginPage() {
               />
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)} // ← Alterna showPassword
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-2 top-2 text-sm text-gray-600 hover:underline"
               >
                 {showPassword ? "Ocultar" : "Mostrar"}
@@ -93,7 +107,9 @@ export default function LoginPage() {
           </form>
 
           {message && (
-            <p className="mt-4 text-center text-sm font-medium text-black">{message}</p>
+            <p className="mt-4 text-center text-sm font-medium text-black">
+              {message}
+            </p>
           )}
 
           <p className="mt-6 text-center text-sm text-black">
