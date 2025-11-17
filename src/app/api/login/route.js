@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { Pool } from "pg";
 
 const pool = new Pool({
@@ -29,39 +27,21 @@ export async function POST(request) {
     }
 
     const user = result.rows[0];
-    const passwordCorrecta = await bcrypt.compare(password, user.password);
 
-    if (!passwordCorrecta) {
+    if (user.password !== password) {
       return NextResponse.json(
         { error: "Contraseña incorrecta" },
         { status: 401 }
       );
     }
 
-    // Generar token
-    const token = jwt.sign(
-      { id: user.id, username: user.username },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
-
-    const response = NextResponse.json({
+    return NextResponse.json({
       message: "Login exitoso",
       user: {
         id: user.id,
-        username: user.username
-      }
+        username: user.username,
+      },
     });
-
-    // Cookie HttpOnly (ajuste para desarrollo)
-    response.cookies.set("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 días
-    });
-
-    return response;
 
   } catch (error) {
     console.error(error);
