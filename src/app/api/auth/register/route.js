@@ -20,7 +20,8 @@ export async function POST(request) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const query =
-      "INSERT INTO usuarios (username, password) VALUES ($1, $2) RETURNING id";
+      "INSERT INTO usuarios (username, password) VALUES (LOWER($1), $2) RETURNING id";
+
     await pool.query(query, [username, hashedPassword]);
 
     return NextResponse.json({ message: "Usuario registrado correctamente" });
@@ -40,3 +41,4 @@ export async function POST(request) {
     );
   }
 }
+

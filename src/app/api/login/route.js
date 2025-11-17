@@ -18,8 +18,8 @@ export async function POST(request) {
       );
     }
 
-    const query = "SELECT * FROM usuarios WHERE username = $1 LIMIT 1";
-    const result = await pool.query(query, [username]);
+    const query = "SELECT * FROM usuarios WHERE username = LOWER($1) LIMIT 1";
+    const result = await pool.query(query, [username.toLowerCase()]);
 
     if (result.rows.length === 0) {
       return NextResponse.json(
@@ -38,14 +38,13 @@ export async function POST(request) {
       );
     }
 
-    // 🔥 Generar token
+    // Generar token
     const token = jwt.sign(
       { id: user.id, username: user.username },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // 🔥 Respuesta con cookie + datos del usuario
     const response = NextResponse.json({
       message: "Login exitoso",
       user: {
@@ -54,10 +53,10 @@ export async function POST(request) {
       }
     });
 
-    // Cookie HttpOnly
+    // Cookie HttpOnly (ajuste para desarrollo)
     response.cookies.set("token", token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 7 días
     });
