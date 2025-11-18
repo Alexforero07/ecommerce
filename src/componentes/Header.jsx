@@ -39,10 +39,14 @@ export default function Header({ setBusqueda }) {
     <header className="w-full border-b shadow-sm bg-white relative z-50">
 
       {/* Fila superior */}
-      <div className="w-full bg-black text-white text-center py-2 text-sm font-medium">
-        Descubra nuestras colecciones exclusivas en nuestra tienda oficial{" "}
-        <span className="font-bold">CapDiem</span>
-      </div>
+    <div className="w-full bg-black text-white text-center py-2 text-sm font-medium overflow-hidden relative">
+    <div className="marquee">
+       Descubra nuestras colecciones exclusivas en nuestra tienda oficial{" "}
+      <span className="font-bold">CapDiem</span>
+    </div>
+    </div>
+
+
 
       {/* Fila central */}
       <div className="relative h-24 flex items-center justify-between px-6">
@@ -59,7 +63,7 @@ export default function Header({ setBusqueda }) {
               {/* ICONO CORONA — tamaño móvil/desktop */}
               <Crown
                 className="
-                  text-yellow-600 
+                  text-black-600 
                   w-4 h-4
                   sm:w-5 sm:h-5
                 "

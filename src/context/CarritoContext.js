@@ -6,13 +6,13 @@ const CarritoContext = createContext();
 export function CarritoProvider({ children }) {
   const [carrito, setCarrito] = useState([]);
 
-  // 🔹 Cargar carrito desde localStorage al iniciar
+  // Cargar carrito desde localStorage al iniciar
   useEffect(() => {
     const guardado = localStorage.getItem("carrito");
     if (guardado) setCarrito(JSON.parse(guardado));
   }, []);
 
-  // 🔹 Guardar carrito en localStorage cada vez que cambia
+  // Guardar carrito en localStorage cada vez que cambia
   useEffect(() => {
     localStorage.setItem("carrito", JSON.stringify(carrito));
   }, [carrito]);

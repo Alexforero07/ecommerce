@@ -10,7 +10,7 @@ export default function HomePage() {
   const [busqueda, setBusqueda] = useState("");
   const [productos, setProductos] = useState([]);
 
-  // 🔥 Cargar productos desde PostgreSQL
+  // Cargar productos desde PostgreSQL
   useEffect(() => {
     async function cargarProductos() {
       try {
@@ -96,7 +96,7 @@ export default function HomePage() {
                       Añadir al carrito
                     </button>
 
-                    {/* 🌟 Ahora abre la página independiente */}
+                    {/* Ahora abre la página independiente */}
                     <a
                       href={`/producto/${producto.id}`}
                       className="border border-black text-black px-3 py-2 rounded-lg hover:bg-gray-100 text-sm sm:text-base w-full sm:w-auto text-center"
